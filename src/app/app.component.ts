@@ -28,32 +28,8 @@ export class AppComponent  implements OnInit {
   constructor(private locationHttpClient: LocationHttpClient) {
   }
 
+// Route Selection support
   isReturnRequired: boolean = false;
-
-  startDate: Date;
-  returnDate: Date;
-
-  public get returnDatepickerDisabled() {
-    return !this.isReturnRequired;
-  }
-
-  public get returnDateMinDate() {
-    let today = new Date();
-    return this.startDate ? this.startDate : today;
-  }
-
-  public get startDateMinDate() {
-    return new Date();
-  }
-
-  public get startDateMaxDate() {
-    return this.returnDate && this.isReturnRequired ? this.returnDate : null;
-  }
-
-
-
-
-
 
   origin:string;
   origins: Location[] = [
@@ -71,6 +47,7 @@ export class AppComponent  implements OnInit {
   ];
   filteredDestinations = this.destinations;
 
+// TODO implement backend in order to support filtering of origin and destination
   filterOrigins(origin:string, destination: string) {
 /*
     this.locationHttpClient.getLocations(new LocationRequest(Direction.Outbound, origin, destination)).subscribe((result: LocationResponse) => {
@@ -100,11 +77,32 @@ export class AppComponent  implements OnInit {
     return locations.filter(location => location.name.toLowerCase().indexOf(filterValue) >= 0);
   }
 
+// Date Range selection support
 
+  startDate: Date;
+  returnDate: Date;
 
+  public get returnDatepickerDisabled() {
+    return !this.isReturnRequired;
+  }
+
+  public get returnDateMinDate() {
+    let today = new Date();
+    return this.startDate ? this.startDate : today;
+  }
+
+  public get startDateMinDate() {
+    return new Date();
+  }
+
+  public get startDateMaxDate() {
+    return this.returnDate && this.isReturnRequired ? this.returnDate : null;
+  }
+
+// TODO prevent setting invalid data - spinner is restricted to 1-5 but text control needs disabling or change handliing
   numberOfAdults: number = 1;
 
-
+// TODO add button to reset all selcted values
 
   public resetForm() {
     this.isReturnRequired = false;
